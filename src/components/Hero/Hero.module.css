@@ -1,0 +1,255 @@
+.hero {
+  position: relative;
+  z-index: 1;
+  min-height: clamp(680px, 96svh, 1100px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(4rem, 9vh, 7rem) var(--gutter) clamp(3.5rem, 8vh, 6rem);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: clamp(1rem, 2.2vh, 1.9rem);
+}
+
+/* ---- Billing above the sign -------------------------------------------- */
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-family: var(--font-ui);
+  font-size: clamp(0.6rem, 1.1vw, 0.72rem);
+  font-weight: 600;
+  letter-spacing: 0.48em;
+  text-transform: uppercase;
+  color: var(--gold);
+  animation: riseIn 800ms var(--ease-curtain) 120ms backwards;
+}
+
+.label::before,
+.label::after {
+  content: "";
+  width: clamp(24px, 6vw, 64px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-deep), transparent);
+}
+
+/* ---- The sign ----------------------------------------------------------- */
+
+.sign {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-block: clamp(0.25rem, 1.5vh, 1rem);
+}
+
+/* ---- Billing below ------------------------------------------------------ */
+
+.subtitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(0.82rem, 2.1vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: clamp(0.16em, 0.5vw, 0.34em);
+  text-transform: uppercase;
+  color: var(--cream);
+  text-shadow: 0 0 26px rgba(255, 215, 106, 0.28);
+  animation: riseIn 800ms var(--ease-curtain) 700ms backwards;
+}
+
+.network {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.44rem 1.05rem;
+  border: 1px solid rgba(214, 168, 74, 0.4);
+  background: rgba(12, 6, 7, 0.72);
+  font-family: var(--font-mono);
+  font-size: clamp(0.6rem, 1.1vw, 0.7rem);
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--gold);
+  animation: riseIn 800ms var(--ease-curtain) 820ms backwards;
+}
+
+.networkDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--bulb);
+  box-shadow: 0 0 10px rgba(255, 215, 106, 0.9);
+  animation: pulseDot 2.4s ease-out infinite;
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  margin-top: clamp(0.5rem, 1.6vh, 1.3rem);
+  animation: riseIn 800ms var(--ease-curtain) 940ms backwards;
+}
+
+/* ---- Marquee ribbon of slogans ----------------------------------------- */
+
+.ribbon {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 4;
+  overflow: hidden;
+  border-top: 1px solid rgba(214, 168, 74, 0.22);
+  border-bottom: 1px solid rgba(214, 168, 74, 0.22);
+  background: linear-gradient(180deg, rgba(74, 8, 12, 0.5), rgba(5, 5, 5, 0.72));
+  padding-block: 0.62rem;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.ribbonTrack {
+  display: flex;
+  gap: 3.5rem;
+  width: max-content;
+  animation: ribbonScroll 38s linear infinite;
+}
+
+.ribbonItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 3.5rem;
+  font-family: var(--font-ui);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: rgba(244, 231, 197, 0.55);
+  white-space: nowrap;
+}
+
+.ribbonItem::after {
+  content: "✦";
+  color: var(--gold);
+  font-size: 0.6rem;
+}
+
+@keyframes ribbonScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---- Scroll cue --------------------------------------------------------- */
+
+.cue {
+  position: absolute;
+  bottom: 4.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.cueLine {
+  width: 1px;
+  height: 34px;
+  background: linear-gradient(180deg, rgba(214, 168, 74, 0.7), transparent);
+  animation: cueDrop 2.6s ease-in-out infinite;
+}
+
+@keyframes cueDrop {
+  0%,
+  100% {
+    transform: scaleY(0.4);
+    transform-origin: top;
+    opacity: 0.4;
+  }
+  50% {
+    transform: scaleY(1);
+    transform-origin: top;
+    opacity: 1;
+  }
+}
+
+/* Stage floor: lacquered boards catching the footlights */
+.floor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 26%;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, transparent, rgba(163, 22, 28, 0.12) 40%, rgba(5, 5, 5, 0.9)),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 215, 106, 0.04) 0 2px,
+      transparent 2px 46px
+    );
+  transform: perspective(600px) rotateX(62deg);
+  transform-origin: bottom center;
+  pointer-events: none;
+}
+
+@media (max-width: 780px) {
+  .cue {
+    display: none;
+  }
+  .hero {
+    min-height: 92svh;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Shared stage keyframes.
+   CSS Modules scopes every animation name it sees, so a module cannot
+   reference a keyframe declared in globals.css — the reference would be
+   renamed and resolve to nothing. Shared keyframes are therefore
+   declared in each module that uses them. Keep them in sync with the
+   canonical set documented in src/app/globals.css.
+   ------------------------------------------------------------------ */
+
+@keyframes pulseDot {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 215, 106, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(255, 215, 106, 0);
+  }
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

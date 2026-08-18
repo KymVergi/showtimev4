@@ -1,0 +1,67 @@
+.section {
+  position: relative;
+  z-index: 1;
+  padding-block: var(--section-y);
+  padding-inline: var(--gutter);
+  scroll-margin-top: 96px;
+}
+
+.inner {
+  width: 100%;
+  max-width: var(--max-w);
+  margin-inline: auto;
+}
+
+/* A hairline of brass across the top of each act, fading at the edges. */
+.rule {
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(214, 168, 74, 0.42) 22%,
+    rgba(255, 215, 106, 0.7) 50%,
+    rgba(214, 168, 74, 0.42) 78%,
+    transparent
+  );
+}
+
+/* A small brass diamond centred on the rule — a poster ornament. */
+.rule::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  transform: translateX(-50%) rotate(45deg);
+  background: var(--gold);
+  box-shadow: 0 0 10px rgba(255, 215, 106, 0.7);
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin-bottom: clamp(2.25rem, 4.5vw, 3.75rem);
+}
+
+.act {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.36em;
+  color: var(--gold-deep);
+}
+
+.dark {
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(0, 0, 0, 0.55) 30%,
+    rgba(0, 0, 0, 0.72) 70%,
+    transparent
+  );
+}

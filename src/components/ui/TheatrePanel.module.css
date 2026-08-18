@@ -1,0 +1,128 @@
+/* A poster panel, not a glass card: velvet ground, brass rule, cut corners
+   and a printed-plate feel. Used everywhere a "card" would otherwise appear. */
+
+.panel {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(18, 9, 10, 0.92), rgba(6, 4, 5, 0.94));
+  border: 1px solid var(--line);
+  padding: clamp(1.25rem, 2.4vw, 1.9rem);
+  /* Cut corners — a ticket-stub silhouette rather than a rounded rectangle. */
+  clip-path: polygon(
+    14px 0,
+    100% 0,
+    100% calc(100% - 14px),
+    calc(100% - 14px) 100%,
+    0 100%,
+    0 14px
+  );
+  transition:
+    border-color 320ms var(--ease-stage),
+    box-shadow 320ms var(--ease-stage),
+    transform 320ms var(--ease-stage);
+}
+
+/* Faint velvet weave so the panel reads as fabric, not glass. */
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(163, 22, 28, 0.06) 0 2px,
+    transparent 2px 6px
+  );
+  opacity: 0.7;
+}
+
+.hoverable:hover,
+.hoverable:focus-within {
+  border-color: var(--line-strong);
+  box-shadow:
+    0 0 0 1px rgba(214, 168, 74, 0.12),
+    0 18px 48px -28px rgba(163, 22, 28, 0.9);
+  transform: translateY(-2px);
+}
+
+/* ---- Ornament variant: brass corner brackets --------------------------- */
+
+.ornate .corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: var(--gold);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.ornate .tl {
+  top: 6px;
+  left: 6px;
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+.ornate .tr {
+  top: 6px;
+  right: 6px;
+  border-top: 1px solid;
+  border-right: 1px solid;
+}
+.ornate .bl {
+  bottom: 6px;
+  left: 6px;
+  border-bottom: 1px solid;
+  border-left: 1px solid;
+}
+.ornate .br {
+  bottom: 6px;
+  right: 6px;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+}
+
+/* ---- Header plate ------------------------------------------------------ */
+
+.plate {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 1rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid rgba(214, 168, 74, 0.16);
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.plateIcon {
+  display: grid;
+  place-items: center;
+  color: var(--gold);
+  opacity: 0.9;
+}
+
+/* ---- Ticket variant: perforated edge with punched holes ---------------- */
+
+.ticket {
+  clip-path: none;
+  border-radius: 3px;
+  border-style: dashed;
+  border-color: rgba(214, 168, 74, 0.32);
+}
+
+.ticket::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -7px;
+  width: 14px;
+  height: 14px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow: calc(100% + 0px) 0 0 0 var(--bg);
+}

@@ -1,0 +1,299 @@
+/* ==========================================================================
+   SHOWTIME — global stage
+   Deep black, dark red velvet, gold. Nothing else.
+   ========================================================================== */
+
+:root {
+  /* ---- Palette --------------------------------------------------------- */
+  --black: #050505;
+  --black-2: #12090a;
+  --curtain: #6e0e12;
+  --curtain-deep: #4a080c;
+  --red: #a3161c;
+  --red-bright: #c8272e;
+  --gold: #d6a84a;
+  --gold-deep: #9d7526;
+  --bulb: #ffd76a;
+  --bulb-hot: #fff3cf;
+  --cream: #f4e7c5;
+
+  /* ---- Semantic -------------------------------------------------------- */
+  --bg: var(--black);
+  --bg-elevated: #0b0607;
+  --ink: var(--cream);
+  --ink-dim: rgba(244, 231, 197, 0.62);
+  --ink-faint: rgba(244, 231, 197, 0.34);
+  --line: rgba(214, 168, 74, 0.22);
+  --line-strong: rgba(214, 168, 74, 0.45);
+
+  /* ---- Type ------------------------------------------------------------ */
+  --font-display: var(--font-cinzel), "Cinzel", Georgia, serif;
+  --font-serif: var(--font-playfair), "Playfair Display", Georgia, serif;
+  --font-ui: var(--font-inter), "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-mono-jb), "JetBrains Mono", ui-monospace, monospace;
+
+  /* ---- Rhythm ---------------------------------------------------------- */
+  --gutter: clamp(1.25rem, 4vw, 4rem);
+  --section-y: clamp(5rem, 11vw, 9.5rem);
+  --max-w: 1240px;
+
+  /* ---- Motion ---------------------------------------------------------- */
+  --ease-curtain: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-stage: cubic-bezier(0.4, 0, 0.2, 1);
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* The house lights: a dim warm wash from above, darkness at the edges. */
+  background-image:
+    radial-gradient(
+      ellipse 120% 70% at 50% -10%,
+      rgba(163, 22, 28, 0.22),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 90% 50% at 50% 100%,
+      rgba(110, 14, 18, 0.16),
+      transparent 65%
+    );
+  background-attachment: fixed;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+::selection {
+  background: var(--red);
+  color: var(--bulb-hot);
+}
+
+/* ---- Scrollbar: a thin brass rail ------------------------------------- */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #070405;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--gold-deep), #5c4415);
+  border-radius: 999px;
+  border: 2px solid #070405;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--gold), var(--gold-deep));
+}
+
+/* ==========================================================================
+   Typography primitives
+   ========================================================================== */
+
+.eyebrow {
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.sectionTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: clamp(2rem, 5.2vw, 3.75rem);
+  line-height: 1.04;
+  margin: 0;
+  color: var(--cream);
+  text-shadow: 0 0 40px rgba(163, 22, 28, 0.45);
+}
+
+.statement {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.35rem, 3vw, 2.15rem);
+  line-height: 1.32;
+  color: var(--bulb);
+  margin: 0;
+}
+
+.prose {
+  color: var(--ink-dim);
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  line-height: 1.78;
+  max-width: 62ch;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+}
+
+/* ==========================================================================
+   Shared motion — canonical definitions
+   --------------------------------------------------------------------------
+   These are the reference implementations for the house animations. CSS
+   Modules scopes every animation name it encounters, so a `.module.css` file
+   cannot reference a keyframe declared here — the reference would be renamed
+   and silently resolve to nothing. Modules therefore carry their own copy of
+   whichever of these they use, marked with a pointer back to this block.
+   Change one here, change it in the modules that mirror it.
+   ========================================================================== */
+
+@keyframes bulbGlow {
+  0%,
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.72;
+    filter: brightness(0.82);
+  }
+}
+
+@keyframes bulbFlicker {
+  0%,
+  92%,
+  100% {
+    opacity: 1;
+  }
+  93% {
+    opacity: 0.25;
+  }
+  94% {
+    opacity: 0.9;
+  }
+  95% {
+    opacity: 0.35;
+  }
+  96% {
+    opacity: 1;
+  }
+}
+
+@keyframes spotSweep {
+  0% {
+    transform: translateX(-14%) rotate(-7deg);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateX(14%) rotate(7deg);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateX(-14%) rotate(-7deg);
+    opacity: 0.35;
+  }
+}
+
+@keyframes smokeDrift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.18;
+  }
+  50% {
+    transform: translate3d(3%, -4%, 0) scale(1.08);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.18;
+  }
+}
+
+@keyframes curtainBreathe {
+  0%,
+  100% {
+    transform: translateX(0) scaleX(1);
+  }
+  50% {
+    transform: translateX(-0.4%) scaleX(1.006);
+  }
+}
+
+@keyframes pulseDot {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 215, 106, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(255, 215, 106, 0);
+  }
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   Reduced motion — the show goes on, quietly
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ==========================================================================
+   Focus — brass ring, always visible
+   ========================================================================== */
+
+:focus-visible {
+  outline: 2px solid var(--bulb);
+  outline-offset: 3px;
+  border-radius: 2px;
+}

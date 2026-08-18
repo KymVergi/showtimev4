@@ -1,0 +1,295 @@
+/* ==========================================================================
+   THE MARQUEE
+   Each letter is a plaque: deep red glass face, gold rim, extruded body,
+   and a ring of warm bulbs. Bulbs run in two interleaved banks so they can
+   alternate like a real chase circuit.
+   ========================================================================== */
+
+.word {
+  --bulb-size: 0.085em;
+  --bulb-gap: 0.155em;
+  --plaque-pad: 0.135em;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0.02em;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.4rem, 10.4vw, 10.5rem);
+  line-height: 0.92;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  filter: drop-shadow(0 0.06em 0.14em rgba(0, 0, 0, 0.85));
+}
+
+/* Overall warm bloom behind the sign */
+.word::before {
+  content: "";
+  position: absolute;
+  inset: -8% -4%;
+  background: radial-gradient(
+    ellipse 60% 70% at 50% 50%,
+    rgba(255, 215, 106, 0.13),
+    rgba(163, 22, 28, 0.08) 45%,
+    transparent 72%
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+.wordWrap {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+/* ---- Letter plaque ------------------------------------------------------ */
+
+.letter {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: var(--plaque-pad) calc(var(--plaque-pad) * 0.92);
+  animation: letterSettle 900ms var(--ease-curtain) backwards;
+  animation-delay: calc(var(--i) * 70ms);
+}
+
+@keyframes letterSettle {
+  from {
+    opacity: 0;
+    transform: translateY(0.18em) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Plaque backing: dark velvet panel with a brass edge */
+.plaque {
+  position: absolute;
+  inset: 0;
+  border-radius: 0.06em;
+  background:
+    linear-gradient(180deg, rgba(30, 8, 10, 0.72), rgba(8, 4, 5, 0.9));
+  box-shadow:
+    inset 0 0 0 1px rgba(214, 168, 74, 0.32),
+    inset 0 0 1.4em rgba(163, 22, 28, 0.3),
+    0 0 2.2em rgba(163, 22, 28, 0.28);
+}
+
+/* ---- Bulb banks ---------------------------------------------------------
+   Two absolutely positioned layers, each a border-box of dotted lights, offset
+   from one another by one gap so they interleave. Alternating their brightness
+   produces the classic chase without a single extra DOM node per bulb.        */
+
+.bulbs {
+  position: absolute;
+  inset: calc(var(--bulb-size) * -0.15);
+  border-radius: 0.06em;
+  pointer-events: none;
+  background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+  background-position: left top, left bottom, left top, right top;
+  background-size:
+    var(--bulb-gap) var(--bulb-size),
+    var(--bulb-gap) var(--bulb-size),
+    var(--bulb-size) var(--bulb-gap),
+    var(--bulb-size) var(--bulb-gap);
+  background-image:
+    radial-gradient(circle at 50% 50%, var(--bulb-hot) 0 14%, var(--bulb) 15% 34%, rgba(255, 190, 80, 0.55) 35% 48%, transparent 52%),
+    radial-gradient(circle at 50% 50%, var(--bulb-hot) 0 14%, var(--bulb) 15% 34%, rgba(255, 190, 80, 0.55) 35% 48%, transparent 52%),
+    radial-gradient(circle at 50% 50%, var(--bulb-hot) 0 14%, var(--bulb) 15% 34%, rgba(255, 190, 80, 0.55) 35% 48%, transparent 52%),
+    radial-gradient(circle at 50% 50%, var(--bulb-hot) 0 14%, var(--bulb) 15% 34%, rgba(255, 190, 80, 0.55) 35% 48%, transparent 52%);
+  filter: drop-shadow(0 0 0.06em rgba(255, 215, 106, 0.9))
+    drop-shadow(0 0 0.16em rgba(255, 170, 60, 0.5));
+}
+
+.bankA {
+  animation: chaseA 2.4s steps(1, end) infinite;
+  animation-delay: calc(var(--i) * -140ms);
+}
+
+.bankB {
+  background-position:
+    calc(var(--bulb-gap) / 2) top,
+    calc(var(--bulb-gap) / 2) bottom,
+    left calc(var(--bulb-gap) / 2),
+    right calc(var(--bulb-gap) / 2);
+  animation: chaseB 2.4s steps(1, end) infinite;
+  animation-delay: calc(var(--i) * -140ms);
+}
+
+@keyframes chaseA {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0.34;
+  }
+}
+
+@keyframes chaseB {
+  0%,
+  49% {
+    opacity: 0.34;
+  }
+  50%,
+  100% {
+    opacity: 1;
+  }
+}
+
+/* A rare, brief stutter on one plaque — a tired bulb, never a strobe. */
+.flicker {
+  animation:
+    chaseA 2.4s steps(1, end) infinite,
+    bulbFlicker 13s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -140ms), calc(var(--i) * 1.9s);
+}
+
+/* ---- Glyphs ------------------------------------------------------------- */
+
+.glyph {
+  grid-area: 1 / 1;
+  display: block;
+}
+
+/* The extruded body sitting behind the face */
+.depth {
+  color: #3a060a;
+  transform: translate(0.012em, 0.026em);
+  text-shadow:
+    0.004em 0.006em 0 #40070b,
+    0.008em 0.012em 0 #3a060a,
+    0.012em 0.018em 0 #340509,
+    0.016em 0.024em 0 #2c0407,
+    0.02em 0.03em 0 #250306,
+    0.024em 0.036em 0 #1d0205,
+    0.028em 0.042em 0.02em rgba(0, 0, 0, 0.8);
+}
+
+/* The lit face */
+.face {
+  position: relative;
+  color: transparent;
+  background: linear-gradient(
+    177deg,
+    #e0424a 0%,
+    #c8272e 22%,
+    #a3161c 52%,
+    #7c1015 78%,
+    #5c0b10 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: 0.014em var(--gold);
+  paint-order: stroke fill;
+  filter: drop-shadow(0 0 0.1em rgba(200, 39, 46, 0.55))
+    drop-shadow(0 0 0.34em rgba(163, 22, 28, 0.35));
+}
+
+/* Specular highlight raked across the top of every letter */
+.sheen {
+  grid-area: 1 / 1;
+  color: rgba(255, 215, 106, 0.42);
+  -webkit-mask-image: linear-gradient(
+    182deg,
+    #000 0%,
+    rgba(0, 0, 0, 0.6) 26%,
+    transparent 44%
+  );
+  mask-image: linear-gradient(
+    182deg,
+    #000 0%,
+    rgba(0, 0, 0, 0.6) 26%,
+    transparent 44%
+  );
+  pointer-events: none;
+}
+
+/* ---- Sizes -------------------------------------------------------------- */
+
+.hero {
+  font-size: clamp(2.6rem, 10.6vw, 10rem);
+}
+
+.compact {
+  --bulb-size: 0.12em;
+  --bulb-gap: 0.22em;
+  --plaque-pad: 0.14em;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  font-size: clamp(0.78rem, 1.5vw, 1.08rem);
+  filter: none;
+}
+
+.compact .letter {
+  animation: none;
+}
+
+.compact .depth {
+  text-shadow:
+    0.008em 0.012em 0 #3a060a,
+    0.016em 0.024em 0 #2c0407;
+}
+
+/* Wrap to two banks of four on narrow screens so the sign stays enormous. */
+@media (max-width: 660px) {
+  .hero {
+    font-size: 18.5vw;
+    max-width: 92vw;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero {
+    font-size: 19.5vw;
+  }
+}
+
+/* Accessible text for the sign; the plaques themselves are decorative. */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ------------------------------------------------------------------
+   Shared stage keyframes.
+   CSS Modules scopes every animation name it sees, so a module cannot
+   reference a keyframe declared in globals.css — the reference would be
+   renamed and resolve to nothing. Shared keyframes are therefore
+   declared in each module that uses them. Keep them in sync with the
+   canonical set documented in src/app/globals.css.
+   ------------------------------------------------------------------ */
+
+@keyframes bulbFlicker {
+  0%,
+  92%,
+  100% {
+    opacity: 1;
+  }
+  93% {
+    opacity: 0.25;
+  }
+  94% {
+    opacity: 0.9;
+  }
+  95% {
+    opacity: 0.35;
+  }
+  96% {
+    opacity: 1;
+  }
+}

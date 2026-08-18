@@ -1,0 +1,243 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition: background 400ms var(--ease-stage), border-color 400ms var(--ease-stage);
+  border-bottom: 1px solid transparent;
+}
+
+.scrolled {
+  background: rgba(5, 5, 5, 0.82);
+  backdrop-filter: blur(14px) saturate(120%);
+  border-bottom-color: rgba(214, 168, 74, 0.2);
+}
+
+/* A thin bulb rail under the header — the front-of-house light strip. */
+.scrolled::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 3px;
+  background-image: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 215, 106, 0.9) 0 32%,
+    transparent 38%
+  );
+  background-size: 16px 3px;
+  background-repeat: repeat-x;
+  opacity: 0.35;
+  animation: bulbGlow 4s ease-in-out infinite;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding: 0.85rem var(--gutter);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.9rem, 2vw, 1.9rem);
+}
+
+.link {
+  position: relative;
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  padding: 0.35rem 0;
+  transition: color 220ms var(--ease-stage);
+  white-space: nowrap;
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  height: 1px;
+  background: var(--bulb);
+  box-shadow: 0 0 8px rgba(255, 215, 106, 0.8);
+  transition: right 260ms var(--ease-curtain);
+}
+
+.link:hover {
+  color: var(--bulb);
+}
+
+.link:hover::after {
+  right: 0;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-shrink: 0;
+}
+
+/* ---- Network chip ------------------------------------------------------ */
+
+.network {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.42rem 0.8rem;
+  border: 1px solid rgba(214, 168, 74, 0.35);
+  background: rgba(18, 9, 10, 0.6);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.networkDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--bulb);
+  animation: pulseDot 2.4s ease-out infinite;
+}
+
+/* ---- Mobile ------------------------------------------------------------ */
+
+.connectSlot {
+  display: inline-flex;
+}
+
+/* The orchestra plate stays available at every width — it is the only way to
+   start the score, and the drawer's copy is a second entrance, not the only
+   one. */
+.orchestraSlot {
+  flex-shrink: 0;
+}
+
+.burger {
+  display: none;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(214, 168, 74, 0.35);
+  background: rgba(18, 9, 10, 0.7);
+  color: var(--gold);
+  cursor: pointer;
+}
+
+.drawer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1.5rem 1.35rem;
+  width: min(320px, 84vw);
+  height: 100%;
+}
+
+.drawerHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.4rem;
+}
+
+.drawerClose {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(214, 168, 74, 0.3);
+  background: transparent;
+  color: var(--gold);
+  cursor: pointer;
+}
+
+.drawerLink {
+  padding: 0.95rem 0.2rem;
+  border-bottom: 1px solid rgba(214, 168, 74, 0.14);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+
+.drawerLink:hover {
+  color: var(--bulb);
+}
+
+.drawerFoot {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+@media (max-width: 1080px) {
+  .links {
+    display: none;
+  }
+  .burger {
+    display: grid;
+  }
+}
+
+@media (max-width: 560px) {
+  .network {
+    display: none;
+  }
+  /* The drawer carries its own full-width "Enter the show" button, so the
+     header keeps just the wordmark and the menu. */
+  .connectSlot {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Shared stage keyframes.
+   CSS Modules scopes every animation name it sees, so a module cannot
+   reference a keyframe declared in globals.css — the reference would be
+   renamed and resolve to nothing. Shared keyframes are therefore
+   declared in each module that uses them. Keep them in sync with the
+   canonical set documented in src/app/globals.css.
+   ------------------------------------------------------------------ */
+
+@keyframes bulbGlow {
+  0%,
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.72;
+    filter: brightness(0.82);
+  }
+}
+
+@keyframes pulseDot {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 215, 106, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(255, 215, 106, 0);
+  }
+}

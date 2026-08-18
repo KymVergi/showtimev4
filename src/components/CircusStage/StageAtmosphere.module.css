@@ -1,0 +1,255 @@
+/* The permanent venue: tent ceiling, side curtains, spotlights, haze.
+   Fixed behind every section so scrolling feels like walking through one room. */
+
+.stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  contain: strict;
+}
+
+/* ---- Tent ceiling: alternating canvas panels radiating from the peak ----- */
+.tent {
+  position: absolute;
+  top: -14vh;
+  left: 50%;
+  width: 190vmax;
+  height: 120vh;
+  transform: translateX(-50%);
+  background: conic-gradient(
+    from 180deg at 50% 0%,
+    rgba(110, 14, 18, 0.5) 0deg,
+    rgba(8, 5, 6, 0.55) 7.5deg,
+    rgba(110, 14, 18, 0.5) 15deg
+  );
+  mask-image: radial-gradient(
+    ellipse 80% 92% at 50% 0%,
+    #000 0%,
+    rgba(0, 0, 0, 0.6) 45%,
+    transparent 78%
+  );
+  opacity: 0.5;
+}
+
+/* ---- Centre pole light bloom -------------------------------------------- */
+.peak {
+  position: absolute;
+  top: -8vh;
+  left: 50%;
+  width: 42vmax;
+  height: 42vmax;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 215, 106, 0.14),
+    rgba(255, 215, 106, 0.04) 40%,
+    transparent 70%
+  );
+  animation: bulbGlow 7s var(--ease-stage) infinite;
+}
+
+/* ---- Side curtains ------------------------------------------------------ */
+.curtain {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(70px, 13vw, 210px);
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.55) 0px,
+      rgba(110, 14, 18, 0.9) 9px,
+      rgba(163, 22, 28, 0.72) 17px,
+      rgba(74, 8, 12, 0.95) 26px,
+      rgba(0, 0, 0, 0.55) 34px
+    ),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0.9));
+  transform-origin: top center;
+  animation: curtainBreathe 16s ease-in-out infinite;
+}
+
+.curtainLeft {
+  left: 0;
+  mask-image: linear-gradient(90deg, #000 55%, transparent 100%);
+}
+
+.curtainRight {
+  right: 0;
+  mask-image: linear-gradient(270deg, #000 55%, transparent 100%);
+  animation-delay: -8s;
+}
+
+/* ---- Valance: the scalloped pelmet across the top ----------------------- */
+.valance {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: clamp(46px, 7vw, 96px);
+  background: linear-gradient(180deg, rgba(74, 8, 12, 0.95), rgba(110, 14, 18, 0.55));
+  mask-image: radial-gradient(
+    ellipse 6% 100% at 0% 0%,
+    #000 60%,
+    transparent 61%
+  );
+  mask-size: 7% 100%;
+  mask-repeat: repeat-x;
+  opacity: 0.55;
+}
+
+/* ---- Spotlights --------------------------------------------------------- */
+.spot {
+  position: absolute;
+  top: -22vh;
+  width: 46vw;
+  height: 150vh;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 215, 106, 0.16),
+    rgba(255, 215, 106, 0.05) 38%,
+    transparent 72%
+  );
+  clip-path: polygon(44% 0%, 56% 0%, 100% 100%, 0% 100%);
+  filter: blur(14px);
+  mix-blend-mode: screen;
+}
+
+.spotA {
+  left: 6%;
+  animation: spotSweep 21s ease-in-out infinite;
+}
+
+.spotB {
+  right: 6%;
+  animation: spotSweep 27s ease-in-out infinite reverse;
+}
+
+.spotC {
+  left: 50%;
+  width: 34vw;
+  margin-left: -17vw;
+  opacity: 0.5;
+  animation: spotSweep 34s ease-in-out infinite;
+}
+
+/* ---- Haze --------------------------------------------------------------- */
+.smoke {
+  position: absolute;
+  inset: -10%;
+  background:
+    radial-gradient(ellipse 40% 30% at 22% 78%, rgba(214, 168, 74, 0.07), transparent 70%),
+    radial-gradient(ellipse 50% 26% at 76% 86%, rgba(163, 22, 28, 0.1), transparent 72%),
+    radial-gradient(ellipse 60% 34% at 50% 96%, rgba(255, 215, 106, 0.05), transparent 75%);
+  filter: blur(28px);
+  animation: smokeDrift 24s ease-in-out infinite;
+}
+
+/* ---- Crowd silhouettes along the bottom -------------------------------- */
+.crowd {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: clamp(60px, 10vh, 130px);
+  background:
+    radial-gradient(ellipse 3.2% 130% at 6% 100%, #000 60%, transparent 62%),
+    radial-gradient(ellipse 3.6% 150% at 14% 100%, #000 60%, transparent 62%),
+    radial-gradient(ellipse 3% 120% at 23% 100%, #000 60%, transparent 62%),
+    radial-gradient(ellipse 3.8% 145% at 33% 100%, #000 60%, transparent 62%),
+    radial-gradient(ellipse 3.2% 128% at 43% 100%, #000 60%, transparent 62%),
+    radial-gradient(ellipse 3.6% 152% at 54% 100%, #000 60%, transparent 62%),
+    radial-gradient(ellipse 3% 122% at 64% 100%, #000 60%, transparent 62%),
+    radial-gradient(ellipse 3.9% 148% at 74% 100%, #000 60%, transparent 62%),
+    radial-gradient(ellipse 3.2% 126% at 85% 100%, #000 60%, transparent 62%),
+    radial-gradient(ellipse 3.6% 150% at 94% 100%, #000 60%, transparent 62%);
+  opacity: 0.62;
+  filter: blur(1.5px);
+}
+
+/* ---- Vignette ----------------------------------------------------------- */
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 78% 66% at 50% 42%,
+    transparent 0%,
+    rgba(5, 5, 5, 0.35) 62%,
+    rgba(5, 5, 5, 0.88) 100%
+  );
+}
+
+/* ---- Fine grain: keeps the black from looking flat ---------------------- */
+.grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  background-image: repeating-conic-gradient(
+    rgba(255, 255, 255, 0.5) 0% 25%,
+    transparent 0% 50%
+  );
+  background-size: 3px 3px;
+  mix-blend-mode: overlay;
+}
+
+/* ------------------------------------------------------------------
+   Shared stage keyframes.
+   CSS Modules scopes every animation name it sees, so a module cannot
+   reference a keyframe declared in globals.css — the reference would be
+   renamed and resolve to nothing. Shared keyframes are therefore
+   declared in each module that uses them. Keep them in sync with the
+   canonical set documented in src/app/globals.css.
+   ------------------------------------------------------------------ */
+
+@keyframes bulbGlow {
+  0%,
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.72;
+    filter: brightness(0.82);
+  }
+}
+
+@keyframes spotSweep {
+  0% {
+    transform: translateX(-14%) rotate(-7deg);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateX(14%) rotate(7deg);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateX(-14%) rotate(-7deg);
+    opacity: 0.35;
+  }
+}
+
+@keyframes smokeDrift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.18;
+  }
+  50% {
+    transform: translate3d(3%, -4%, 0) scale(1.08);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.18;
+  }
+}
+
+@keyframes curtainBreathe {
+  0%,
+  100% {
+    transform: translateX(0) scaleX(1);
+  }
+  50% {
+    transform: translateX(-0.4%) scaleX(1.006);
+  }
+}

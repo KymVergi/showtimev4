@@ -1,0 +1,155 @@
+/* A pair of velvet drapes that can be driven open or closed. Used as the frame
+   for the hero and as the whole event of Act 07. */
+
+.stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 56%;
+  background-image:
+    /* fold shading */
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.62) 0px,
+      rgba(74, 8, 12, 0.96) 14px,
+      rgba(140, 18, 24, 0.92) 30px,
+      rgba(163, 22, 28, 0.85) 38px,
+      rgba(90, 10, 15, 0.95) 52px,
+      rgba(0, 0, 0, 0.62) 68px
+    ),
+    /* vertical light falloff */
+      linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.55),
+        rgba(0, 0, 0, 0.08) 34%,
+        rgba(0, 0, 0, 0.72) 100%
+      );
+  box-shadow: 0 0 90px rgba(0, 0, 0, 0.85);
+  transition: transform 1500ms var(--ease-curtain);
+  will-change: transform;
+}
+
+.left {
+  left: 0;
+  transform-origin: left center;
+  border-right: 1px solid rgba(214, 168, 74, 0.18);
+}
+
+.right {
+  right: 0;
+  transform-origin: right center;
+  border-left: 1px solid rgba(214, 168, 74, 0.18);
+}
+
+/* Open: drapes pulled back to the wings. */
+.open .left {
+  transform: translateX(-82%) skewX(-1.5deg);
+}
+.open .right {
+  transform: translateX(82%) skewX(1.5deg);
+}
+
+/* Closed: drapes meet centre stage. */
+.closed .left,
+.closed .right {
+  transform: translateX(0);
+}
+
+/* Ajar: mostly drawn, a sliver of stage showing — the default framing.
+   The sway keyframes have to restate the parked position: an animation on
+   `transform` replaces the declared transform outright, so animating a bare
+   translateX here would snap the drapes back to centre stage. */
+.ajar .left {
+  transform: translateX(-68%) skewX(-1deg);
+  animation: swayLeft 18s ease-in-out infinite;
+}
+.ajar .right {
+  transform: translateX(68%) skewX(1deg);
+  animation: swayRight 18s ease-in-out infinite;
+}
+
+@keyframes swayLeft {
+  0%,
+  100% {
+    transform: translateX(-68%) skewX(-1deg) scaleX(1);
+  }
+  50% {
+    transform: translateX(-68.6%) skewX(-1.3deg) scaleX(1.008);
+  }
+}
+
+@keyframes swayRight {
+  0%,
+  100% {
+    transform: translateX(68%) skewX(1deg) scaleX(1);
+  }
+  50% {
+    transform: translateX(68.6%) skewX(1.3deg) scaleX(1.008);
+  }
+}
+
+/* ---- Pelmet and tiebacks ----------------------------------------------- */
+
+.pelmet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: clamp(52px, 8vw, 118px);
+  background:
+    linear-gradient(180deg, #4a080c, #8a1218 60%, #5c0b10);
+  mask-image: radial-gradient(ellipse 5.2% 100% at 0% 0%, #000 62%, transparent 63%);
+  mask-size: 6% 100%;
+  mask-repeat: repeat-x;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+/* Brass fringe hanging from the pelmet */
+.fringe {
+  position: absolute;
+  top: clamp(48px, 7.6vw, 112px);
+  left: 0;
+  right: 0;
+  height: 12px;
+  background-image: radial-gradient(
+    circle at 50% 0%,
+    var(--gold-deep) 0 42%,
+    transparent 46%
+  );
+  background-size: 14px 12px;
+  background-repeat: repeat-x;
+  opacity: 0.6;
+}
+
+/* ---- Meeting-line glow: light leaking between the drapes ---------------- */
+
+.seam {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 3px;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(255, 215, 106, 0.6),
+    rgba(255, 215, 106, 0.15),
+    transparent
+  );
+  filter: blur(2px);
+  opacity: 0;
+  transition: opacity 900ms var(--ease-stage);
+}
+
+.closed .seam {
+  opacity: 1;
+}
+

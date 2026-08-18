@@ -1,0 +1,202 @@
+/* The running order. A vertical (or horizontal) chain of billed steps with a
+   travelling light between them, like cue lights running down a cue sheet. */
+
+.flow {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.vertical {
+  flex-direction: column;
+}
+
+.horizontal {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.72rem 1.35rem;
+  min-width: 168px;
+  text-align: center;
+  border: 1px solid rgba(214, 168, 74, 0.3);
+  background: linear-gradient(180deg, rgba(24, 11, 12, 0.9), rgba(6, 4, 5, 0.92));
+  clip-path: polygon(
+    9px 0,
+    calc(100% - 9px) 0,
+    100% 50%,
+    calc(100% - 9px) 100%,
+    9px 100%,
+    0 50%
+  );
+  opacity: 0;
+  animation: riseIn 620ms var(--ease-curtain) forwards;
+  animation-delay: calc(var(--i) * 110ms);
+}
+
+.stepLabel {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.86rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+
+.stepNote {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+}
+
+/* The featured step — where the Ringmaster stands. */
+.accent {
+  border-color: var(--gold);
+  background: linear-gradient(180deg, rgba(110, 14, 18, 0.85), rgba(40, 8, 10, 0.95));
+  box-shadow:
+    0 0 0 1px rgba(255, 215, 106, 0.16),
+    0 0 34px -14px rgba(255, 215, 106, 0.9);
+}
+
+.accent .stepLabel {
+  color: var(--bulb);
+}
+
+/* ---- Connector --------------------------------------------------------- */
+
+.link {
+  position: relative;
+  display: grid;
+  place-items: center;
+  color: var(--gold);
+  opacity: 0;
+  animation: riseIn 620ms var(--ease-curtain) forwards;
+  animation-delay: calc(var(--i) * 110ms + 55ms);
+}
+
+.vertical .link {
+  width: 1px;
+  height: 34px;
+  background: linear-gradient(
+    180deg,
+    rgba(214, 168, 74, 0.1),
+    rgba(214, 168, 74, 0.6),
+    rgba(214, 168, 74, 0.1)
+  );
+}
+
+.horizontal .link {
+  width: 42px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(214, 168, 74, 0.1),
+    rgba(214, 168, 74, 0.6),
+    rgba(214, 168, 74, 0.1)
+  );
+}
+
+/* Travelling cue light */
+.link::after {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--bulb);
+  box-shadow: 0 0 8px 2px rgba(255, 215, 106, 0.75);
+}
+
+.vertical .link::after {
+  animation: runDown 2.6s linear infinite;
+  animation-delay: calc(var(--i) * 240ms);
+}
+
+.horizontal .link::after {
+  animation: runRight 2.6s linear infinite;
+  animation-delay: calc(var(--i) * 240ms);
+}
+
+@keyframes runDown {
+  0% {
+    transform: translateY(-17px);
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  82% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(17px);
+    opacity: 0;
+  }
+}
+
+@keyframes runRight {
+  0% {
+    transform: translateX(-21px);
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  82% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(21px);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .horizontal {
+    flex-direction: column;
+  }
+  .horizontal .link {
+    width: 1px;
+    height: 28px;
+    background: linear-gradient(
+      180deg,
+      rgba(214, 168, 74, 0.1),
+      rgba(214, 168, 74, 0.6),
+      rgba(214, 168, 74, 0.1)
+    );
+  }
+  .horizontal .link::after {
+    animation-name: runDown;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Shared stage keyframes.
+   CSS Modules scopes every animation name it sees, so a module cannot
+   reference a keyframe declared in globals.css — the reference would be
+   renamed and resolve to nothing. Shared keyframes are therefore
+   declared in each module that uses them. Keep them in sync with the
+   canonical set documented in src/app/globals.css.
+   ------------------------------------------------------------------ */
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

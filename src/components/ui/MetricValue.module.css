@@ -1,0 +1,99 @@
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.label {
+  font-family: var(--font-ui);
+  font-size: 0.63rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.35rem, 2.6vw, 2rem);
+  line-height: 1.06;
+  color: var(--cream);
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 22px rgba(255, 215, 106, 0.24);
+  word-break: break-word;
+}
+
+.valueMono {
+  font-family: var(--font-mono);
+  font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+  letter-spacing: 0;
+}
+
+.suffix {
+  font-family: var(--font-ui);
+  font-size: 0.62em;
+  letter-spacing: 0.16em;
+  color: var(--gold);
+  margin-left: 0.4em;
+}
+
+/* ---- Empty / error states — the show says what it doesn't know ---------- */
+
+.empty {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  color: var(--ink-faint);
+  border-left: 2px solid rgba(214, 168, 74, 0.28);
+  padding-left: 0.6rem;
+}
+
+.emptyWarn {
+  color: rgba(214, 168, 74, 0.72);
+  border-left-color: rgba(214, 168, 74, 0.55);
+}
+
+/* Loading: the house lights dimming up and down */
+.loading {
+  display: inline-block;
+  min-width: 5.5ch;
+  height: 1.1em;
+  border-radius: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(214, 168, 74, 0.08),
+    rgba(214, 168, 74, 0.26),
+    rgba(214, 168, 74, 0.08)
+  );
+  background-size: 220% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 120% 0;
+  }
+  100% {
+    background-position: -120% 0;
+  }
+}
+
+/* ---- Source tag -------------------------------------------------------- */
+
+.source {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.sourceDemo {
+  color: var(--red-bright);
+}

@@ -1,0 +1,123 @@
+/* A playbill: the cast listed on a printed poster. */
+
+.poster {
+  position: relative;
+  border: 1px solid var(--line-strong);
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(163, 22, 28, 0.14), transparent 70%),
+    linear-gradient(180deg, rgba(18, 9, 10, 0.94), rgba(6, 4, 5, 0.96));
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+/* Double brass rule inside the poster edge */
+.poster::before {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border: 1px solid rgba(214, 168, 74, 0.22);
+  pointer-events: none;
+}
+
+.billing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  text-align: center;
+  padding-bottom: clamp(1.5rem, 3vw, 2.2rem);
+  border-bottom: 1px solid rgba(214, 168, 74, 0.2);
+}
+
+.ticker {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2rem, 6vw, 3.6rem);
+  letter-spacing: 0.1em;
+  color: transparent;
+  background: linear-gradient(178deg, #ffd76a, #e0424a 55%, #7c1015);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: 1px rgba(214, 168, 74, 0.55);
+  paint-order: stroke fill;
+  margin: 0;
+}
+
+.tokenName {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.cast {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1px;
+  margin-top: clamp(1.5rem, 3vw, 2.2rem);
+  background: rgba(214, 168, 74, 0.14);
+}
+
+.role {
+  background: linear-gradient(180deg, rgba(14, 7, 8, 0.9), rgba(6, 4, 5, 0.92));
+  padding: clamp(1.1rem, 2.2vw, 1.6rem);
+}
+
+.contractBlock {
+  margin-top: clamp(1.5rem, 3vw, 2.2rem);
+  padding-top: clamp(1.2rem, 2.5vw, 1.8rem);
+  border-top: 1px solid rgba(214, 168, 74, 0.2);
+}
+
+.supplyBar {
+  margin-top: 1.6rem;
+}
+
+.barLabel {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.5rem;
+}
+
+.bar {
+  position: relative;
+  height: 10px;
+  border: 1px solid rgba(214, 168, 74, 0.3);
+  background: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+}
+
+.barFill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: linear-gradient(90deg, var(--red), var(--red-bright));
+  box-shadow: 0 0 18px rgba(200, 39, 46, 0.7);
+  transition: width 1200ms var(--ease-curtain);
+}
+
+.barBurn {
+  position: absolute;
+  inset: 0 0 0 auto;
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 215, 106, 0.55) 0 5px,
+    rgba(214, 168, 74, 0.2) 5px 10px
+  );
+  transition: width 1200ms var(--ease-curtain);
+}
+
+.barEmpty {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: rgba(214, 168, 74, 0.7);
+}
+
+.notice {
+  margin-top: 1.5rem;
+}

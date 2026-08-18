@@ -1,0 +1,171 @@
+/* YOUR TICKET — an actual ticket: stub, perforation, seat details. */
+
+.ticket {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 190px;
+  border: 1px solid var(--line-strong);
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(214, 168, 74, 0.03) 0 2px,
+      transparent 2px 7px
+    ),
+    linear-gradient(120deg, rgba(24, 11, 12, 0.96), rgba(8, 5, 6, 0.97));
+  overflow: hidden;
+}
+
+.main {
+  padding: clamp(1.4rem, 3vw, 2.4rem);
+}
+
+/* The stub, torn off down the right edge */
+.stub {
+  position: relative;
+  padding: clamp(1.4rem, 3vw, 2.4rem) 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(110, 14, 18, 0.35), rgba(8, 5, 6, 0.6));
+  border-left: 2px dashed rgba(214, 168, 74, 0.45);
+}
+
+/* Punched holes along the perforation */
+.stub::before,
+.stub::after {
+  content: "";
+  position: absolute;
+  left: -9px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid rgba(214, 168, 74, 0.3);
+}
+
+.stub::before {
+  top: -8px;
+}
+.stub::after {
+  bottom: -8px;
+}
+
+.stubLabel {
+  font-family: var(--font-ui);
+  font-size: 0.56rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+.stubValue {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--bulb);
+}
+
+.serial {
+  writing-mode: vertical-rl;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: var(--ink-faint);
+}
+
+/* ---- Connected details -------------------------------------------------- */
+
+.walletRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1.1rem;
+  margin-bottom: 1.4rem;
+  border-bottom: 1px solid rgba(214, 168, 74, 0.18);
+}
+
+.walletLabel {
+  font-family: var(--font-ui);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.walletAddr {
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  color: var(--cream);
+  word-break: break-all;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: clamp(1.1rem, 2.4vw, 1.8rem);
+}
+
+/* ---- Disconnected state ------------------------------------------------- */
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.2rem;
+  max-width: 46ch;
+}
+
+.emptyTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 3vw, 1.9rem);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+
+.actions {
+  margin-top: clamp(1.4rem, 3vw, 2rem);
+  padding-top: 1.3rem;
+  border-top: 1px solid rgba(214, 168, 74, 0.18);
+}
+
+@media (max-width: 780px) {
+  .ticket {
+    grid-template-columns: 1fr;
+  }
+  .stub {
+    border-left: 0;
+    border-top: 2px dashed rgba(214, 168, 74, 0.45);
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .stub::before {
+    left: -8px;
+    top: -8px;
+  }
+  .stub::after {
+    left: auto;
+    right: -8px;
+    top: -8px;
+    bottom: auto;
+  }
+  .serial {
+    writing-mode: horizontal-tb;
+  }
+}
+
+.trailingNotice {
+  margin-top: 1.4rem;
+}

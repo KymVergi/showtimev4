@@ -1,0 +1,173 @@
+.footer {
+  position: relative;
+  z-index: 1;
+  padding: clamp(4rem, 8vw, 6.5rem) var(--gutter) 2.5rem;
+  overflow: hidden;
+  border-top: 1px solid rgba(214, 168, 74, 0.18);
+  background: linear-gradient(180deg, rgba(5, 5, 5, 0.2), rgba(20, 4, 6, 0.92));
+}
+
+/* Velvet drop behind the footer — the house curtain at final rest. */
+.velvet {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.6) 0px,
+    rgba(74, 8, 12, 0.55) 16px,
+    rgba(120, 16, 22, 0.42) 34px,
+    rgba(58, 6, 10, 0.6) 52px,
+    rgba(0, 0, 0, 0.6) 72px
+  );
+  opacity: 0.45;
+  mask-image: linear-gradient(180deg, #000, rgba(0, 0, 0, 0.35));
+  pointer-events: none;
+}
+
+.fringe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 14px;
+  background-image: radial-gradient(
+    circle at 50% 0%,
+    var(--gold-deep) 0 40%,
+    transparent 46%
+  );
+  background-size: 16px 14px;
+  background-repeat: repeat-x;
+  opacity: 0.5;
+}
+
+.inner {
+  position: relative;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) repeat(2, minmax(0, 0.8fr));
+  gap: clamp(2rem, 5vw, 4rem);
+}
+
+.brandCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  max-width: 340px;
+}
+
+.slogan {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--bulb);
+  margin: 0;
+}
+
+.network {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--bulb);
+  animation: pulseDot 2.6s ease-out infinite;
+}
+
+.colTitle {
+  font-family: var(--font-ui);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin: 0 0 1rem;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.listLink {
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-dim);
+  transition: color 200ms var(--ease-stage);
+}
+
+.listLink:hover {
+  color: var(--bulb);
+}
+
+.muted {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.08em;
+}
+
+.addr {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--cream);
+  word-break: break-all;
+}
+
+.bottom {
+  position: relative;
+  max-width: var(--max-w);
+  margin: clamp(2.5rem, 5vw, 4rem) auto 0;
+  padding-top: 1.4rem;
+  border-top: 1px solid rgba(214, 168, 74, 0.14);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.14em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+}
+
+@media (max-width: 820px) {
+  .inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Shared stage keyframes.
+   CSS Modules scopes every animation name it sees, so a module cannot
+   reference a keyframe declared in globals.css — the reference would be
+   renamed and resolve to nothing. Shared keyframes are therefore
+   declared in each module that uses them. Keep them in sync with the
+   canonical set documented in src/app/globals.css.
+   ------------------------------------------------------------------ */
+
+@keyframes pulseDot {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 215, 106, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(255, 215, 106, 0);
+  }
+}

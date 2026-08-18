@@ -1,0 +1,141 @@
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+/* ---- The tent mouth swallowing the ticket stream ------------------------ */
+
+.theatre {
+  position: relative;
+  min-height: clamp(340px, 42vw, 460px);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 110%, rgba(255, 215, 106, 0.12), transparent 70%),
+    linear-gradient(180deg, rgba(10, 5, 6, 0.9), rgba(22, 8, 10, 0.94));
+  clip-path: polygon(
+    16px 0,
+    100% 0,
+    100% calc(100% - 16px),
+    calc(100% - 16px) 100%,
+    0 100%,
+    0 16px
+  );
+}
+
+/* The canvas mouth: a lit arch the stubs vanish into */
+.mouth {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 58%;
+  height: 62%;
+  transform: translateX(-50%);
+  border-radius: 50% 50% 0 0 / 62% 62% 0 0;
+  background:
+    linear-gradient(0deg, rgba(255, 215, 106, 0.2), rgba(163, 22, 28, 0.28) 45%, transparent),
+    repeating-conic-gradient(
+      from 200deg at 50% 100%,
+      rgba(140, 18, 24, 0.55) 0deg 8deg,
+      rgba(16, 8, 9, 0.6) 8deg 16deg
+    );
+  border-top: 1px solid rgba(214, 168, 74, 0.4);
+  animation: bulbGlow 9s ease-in-out infinite;
+}
+
+/* Bulb arch tracing the mouth */
+.arch {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 60%;
+  height: 64%;
+  transform: translateX(-50%);
+  border-radius: 50% 50% 0 0 / 62% 62% 0 0;
+  border-top: 2px dotted var(--bulb);
+  border-left: 2px dotted rgba(255, 215, 106, 0.5);
+  border-right: 2px dotted rgba(255, 215, 106, 0.5);
+  filter: drop-shadow(0 0 5px rgba(255, 215, 106, 0.8));
+  opacity: 0.75;
+  animation: bulbGlow 2.8s ease-in-out infinite;
+}
+
+.mouthLabel {
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.34em;
+  color: var(--bulb);
+  text-shadow: 0 0 14px rgba(255, 215, 106, 0.6);
+  z-index: 2;
+}
+
+.flowHolder {
+  position: relative;
+  z-index: 2;
+  padding-block: 1.5rem;
+}
+
+/* ---- Metrics rail ------------------------------------------------------- */
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: clamp(2.25rem, 4vw, 3.5rem);
+  background: rgba(214, 168, 74, 0.16);
+  border: 1px solid var(--line);
+}
+
+.metric {
+  background: linear-gradient(180deg, rgba(16, 8, 9, 0.94), rgba(6, 4, 5, 0.96));
+  padding: clamp(1.15rem, 2.2vw, 1.7rem);
+}
+
+.notice {
+  margin-top: 1.4rem;
+}
+
+@media (max-width: 940px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .metrics {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Shared stage keyframes.
+   CSS Modules scopes every animation name it sees, so a module cannot
+   reference a keyframe declared in globals.css — the reference would be
+   renamed and resolve to nothing. Shared keyframes are therefore
+   declared in each module that uses them. Keep them in sync with the
+   canonical set documented in src/app/globals.css.
+   ------------------------------------------------------------------ */
+
+@keyframes bulbGlow {
+  0%,
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.72;
+    filter: brightness(0.82);
+  }
+}

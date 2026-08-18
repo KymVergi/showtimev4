@@ -1,0 +1,127 @@
+/* Shared staging for the 404 / error / loading houses. */
+
+.stage {
+  position: relative;
+  z-index: 1;
+  min-height: 78svh;
+  display: grid;
+  place-items: center;
+  padding: clamp(4rem, 10vw, 8rem) var(--gutter);
+  overflow: hidden;
+}
+
+.panel {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  max-width: 56ch;
+  padding: clamp(1.8rem, 4vw, 3rem);
+  border: 1px solid var(--line-strong);
+  background: linear-gradient(180deg, rgba(18, 9, 10, 0.94), rgba(5, 4, 4, 0.96));
+  clip-path: polygon(
+    16px 0,
+    100% 0,
+    100% calc(100% - 16px),
+    calc(100% - 16px) 100%,
+    0 100%,
+    0 16px
+  );
+}
+
+.code {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cream);
+  text-shadow: 0 0 34px rgba(163, 22, 28, 0.5);
+}
+
+.body {
+  margin: 0;
+  color: var(--ink-dim);
+  line-height: 1.75;
+}
+
+.digest {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  margin-top: 0.6rem;
+}
+
+.quiet {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.quiet:hover {
+  color: var(--bulb);
+}
+
+/* ---- Loading: the house lights coming up ------------------------------- */
+
+.loadingBulbs {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.4rem;
+}
+
+.loadingBulb {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--bulb);
+  box-shadow: 0 0 12px rgba(255, 215, 106, 0.8);
+  animation: houseLights 1.3s ease-in-out infinite;
+}
+
+.loadingBulb:nth-child(2) {
+  animation-delay: 0.16s;
+}
+.loadingBulb:nth-child(3) {
+  animation-delay: 0.32s;
+}
+.loadingBulb:nth-child(4) {
+  animation-delay: 0.48s;
+}
+
+@keyframes houseLights {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

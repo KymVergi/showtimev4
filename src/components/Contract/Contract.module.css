@@ -1,0 +1,66 @@
+.wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: start;
+}
+
+.plate {
+  border: 1px solid var(--line-strong);
+  background: linear-gradient(180deg, rgba(18, 9, 10, 0.94), rgba(6, 4, 5, 0.96));
+  padding: clamp(1.25rem, 3vw, 2.2rem);
+}
+
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.abiState {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(214, 168, 74, 0.2);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-dim);
+}
+
+.badge {
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid currentColor;
+  white-space: nowrap;
+}
+
+.ok {
+  color: var(--bulb);
+}
+
+.missing {
+  color: rgba(200, 39, 46, 0.9);
+}
+
+.partial {
+  color: var(--gold);
+}
+
+.note {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  line-height: 1.75;
+  color: var(--ink-faint);
+}
+
+@media (max-width: 900px) {
+  .wrap {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,181 @@
+/* The Big Top itself: a striped canvas silhouette on the horizon, centre pole,
+   pennants, and a lit doorway. Drawn in CSS so it stays crisp at any size. */
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.tent {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: min(1180px, 128vw);
+  height: min(560px, 62vh);
+  transform: translateX(-50%);
+}
+
+/* Canopy — a wide cone of alternating canvas panels */
+.canopy {
+  position: absolute;
+  inset: 0;
+  background: conic-gradient(
+    from 202deg at 50% 100%,
+    rgba(120, 16, 22, 0.92) 0deg,
+    rgba(20, 10, 11, 0.94) 8deg,
+    rgba(120, 16, 22, 0.92) 16deg
+  );
+  clip-path: polygon(50% 0%, 100% 78%, 100% 100%, 0% 100%, 0% 78%);
+  opacity: 0.72;
+  filter: saturate(0.9);
+}
+
+/* The scalloped hem where the canvas meets the ground */
+.hem {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 21%;
+  height: 26px;
+  background: rgba(214, 168, 74, 0.5);
+  mask-image: radial-gradient(ellipse 4% 100% at 0% 0%, #000 62%, transparent 63%);
+  mask-size: 4.6% 100%;
+  mask-repeat: repeat-x;
+  opacity: 0.4;
+}
+
+/* Centre pole + finial */
+.pole {
+  position: absolute;
+  left: 50%;
+  top: -6%;
+  width: 3px;
+  height: 12%;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, var(--gold), rgba(214, 168, 74, 0.2));
+  opacity: 0.6;
+}
+
+.finial {
+  position: absolute;
+  left: 50%;
+  top: -7.5%;
+  width: 10px;
+  height: 10px;
+  transform: translateX(-50%) rotate(45deg);
+  background: var(--bulb);
+  box-shadow: 0 0 18px 4px rgba(255, 215, 106, 0.65);
+  animation: bulbGlow 5s ease-in-out infinite;
+}
+
+/* Pennant line strung from the peak to the wings */
+.pennants {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 2%;
+  height: 60px;
+  background-image:
+    linear-gradient(
+      to bottom right,
+      transparent calc(50% - 1px),
+      rgba(214, 168, 74, 0.32) 50%,
+      transparent calc(50% + 1px)
+    );
+  opacity: 0.35;
+}
+
+/* The lit entrance under the canvas */
+.doorway {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: clamp(120px, 16vw, 220px);
+  height: 30%;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    0deg,
+    rgba(255, 215, 106, 0.22),
+    rgba(255, 170, 60, 0.08) 55%,
+    transparent
+  );
+  border-radius: 50% 50% 0 0 / 34% 34% 0 0;
+  filter: blur(6px);
+  animation: bulbGlow 8s ease-in-out infinite;
+}
+
+/* Bulb garland strung along both eaves */
+.garland {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  top: 6%;
+  height: 44%;
+  background-image: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 215, 106, 0.95) 0 26%,
+    transparent 32%
+  );
+  background-size: 34px 34px;
+  background-repeat: repeat-x;
+  /* Follow the slope of the canvas on each side */
+  mask-image:
+    linear-gradient(197deg, #000 0 2px, transparent 2px),
+    linear-gradient(163deg, #000 0 2px, transparent 2px);
+  opacity: 0.42;
+  filter: drop-shadow(0 0 5px rgba(255, 215, 106, 0.8));
+  animation: bulbGlow 3.4s ease-in-out infinite;
+}
+
+/* Ring floor: the sawdust circle in front of the tent */
+.ring {
+  position: absolute;
+  left: 50%;
+  bottom: -4%;
+  width: min(1000px, 108vw);
+  height: 160px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(214, 168, 74, 0.12),
+    rgba(163, 22, 28, 0.06) 48%,
+    transparent 72%
+  );
+  border-top: 1px solid rgba(214, 168, 74, 0.16);
+}
+
+.fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(5, 5, 5, 0.5) 0%,
+    transparent 24%,
+    transparent 62%,
+    rgba(5, 5, 5, 0.85) 100%
+  );
+}
+
+/* ------------------------------------------------------------------
+   Shared stage keyframes.
+   CSS Modules scopes every animation name it sees, so a module cannot
+   reference a keyframe declared in globals.css — the reference would be
+   renamed and resolve to nothing. Shared keyframes are therefore
+   declared in each module that uses them. Keep them in sync with the
+   canonical set documented in src/app/globals.css.
+   ------------------------------------------------------------------ */
+
+@keyframes bulbGlow {
+  0%,
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.72;
+    filter: brightness(0.82);
+  }
+}

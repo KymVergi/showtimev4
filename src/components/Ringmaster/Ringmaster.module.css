@@ -1,0 +1,224 @@
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+
+/* ---- The Ringmaster: hat, band, cane, in a single hard spotlight -------- */
+
+.portrait {
+  position: relative;
+  min-height: clamp(360px, 44vw, 480px);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(8, 4, 5, 0.95), rgba(18, 9, 10, 0.9));
+  clip-path: polygon(
+    16px 0,
+    100% 0,
+    100% calc(100% - 16px),
+    calc(100% - 16px) 100%,
+    0 100%,
+    0 16px
+  );
+}
+
+/* Hard follow-spot from stage left */
+.beam {
+  position: absolute;
+  top: -30%;
+  left: 50%;
+  width: 78%;
+  height: 150%;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 215, 106, 0.2),
+    rgba(255, 215, 106, 0.05) 45%,
+    transparent 78%
+  );
+  clip-path: polygon(41% 0%, 59% 0%, 96% 100%, 4% 100%);
+  filter: blur(10px);
+  mix-blend-mode: screen;
+  animation: bulbGlow 6s ease-in-out infinite;
+}
+
+/* Pool of light on the boards */
+.pool {
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  width: 62%;
+  height: 70px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse,
+    rgba(255, 215, 106, 0.28),
+    rgba(255, 170, 60, 0.08) 55%,
+    transparent 75%
+  );
+  filter: blur(4px);
+}
+
+.figure {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateY(-6%);
+}
+
+/* --- Top hat --- */
+.hat {
+  position: relative;
+  width: 132px;
+  height: 108px;
+  filter: drop-shadow(0 14px 26px rgba(0, 0, 0, 0.85));
+}
+
+.crown {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 92px;
+  height: 88px;
+  transform: translateX(-50%);
+  background: linear-gradient(100deg, #150a0b, #2a1113 42%, #0d0607);
+  border-radius: 6px 6px 2px 2px;
+  border: 1px solid rgba(214, 168, 74, 0.22);
+}
+
+/* The hatband — the one bright line on the whole figure */
+.band {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  width: 94px;
+  height: 15px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, var(--red-bright), var(--curtain));
+  border-block: 1px solid rgba(214, 168, 74, 0.55);
+  box-shadow: 0 0 22px -4px rgba(200, 39, 46, 0.9);
+}
+
+.brim {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 132px;
+  height: 20px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: linear-gradient(180deg, #221011, #0a0506);
+  border: 1px solid rgba(214, 168, 74, 0.25);
+}
+
+/* A single gold pip on the band, catching the follow-spot */
+.pip {
+  position: absolute;
+  bottom: 10px;
+  left: 62%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--bulb);
+  box-shadow: 0 0 14px 3px rgba(255, 215, 106, 0.85);
+  animation: bulbGlow 3.6s ease-in-out infinite;
+}
+
+/* --- Cane, crossed behind --- */
+.cane {
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  width: 4px;
+  height: 190px;
+  transform: translate(46px, 0) rotate(28deg);
+  background: linear-gradient(180deg, var(--gold), rgba(157, 117, 38, 0.5));
+  border-radius: 2px;
+  opacity: 0.8;
+}
+
+.caneHandle {
+  position: absolute;
+  top: -14px;
+  left: -12px;
+  width: 26px;
+  height: 26px;
+  border: 4px solid var(--gold);
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-radius: 50%;
+  transform: rotate(-45deg);
+}
+
+/* --- Caption plate --- */
+.plate {
+  margin-top: 2.4rem;
+  padding: 0.5rem 1.3rem;
+  border: 1px solid rgba(214, 168, 74, 0.45);
+  background: rgba(8, 4, 5, 0.8);
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.36em;
+  color: var(--bulb);
+  text-align: center;
+}
+
+/* ---- Copy column -------------------------------------------------------- */
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.pullQuote {
+  margin: 0;
+  padding-left: 1.2rem;
+  border-left: 2px solid var(--gold);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.05rem, 1.7vw, 1.28rem);
+  line-height: 1.5;
+  color: var(--cream);
+}
+
+.flowHolder {
+  margin-top: 0.6rem;
+}
+
+@media (max-width: 940px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .portrait {
+    order: -1;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Shared stage keyframes.
+   CSS Modules scopes every animation name it sees, so a module cannot
+   reference a keyframe declared in globals.css — the reference would be
+   renamed and resolve to nothing. Shared keyframes are therefore
+   declared in each module that uses them. Keep them in sync with the
+   canonical set documented in src/app/globals.css.
+   ------------------------------------------------------------------ */
+
+@keyframes bulbGlow {
+  0%,
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.72;
+    filter: brightness(0.82);
+  }
+}

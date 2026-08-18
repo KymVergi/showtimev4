@@ -1,0 +1,142 @@
+/* Buttons are tickets: notched stubs with a bulb rail that brightens on hover. */
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.95rem 1.85rem;
+  min-height: 50px;
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1px solid var(--gold);
+  background: transparent;
+  color: var(--cream);
+  isolation: isolate;
+  /* Notched stub silhouette */
+  clip-path: polygon(
+    10px 0,
+    calc(100% - 10px) 0,
+    100% 10px,
+    100% calc(100% - 10px),
+    calc(100% - 10px) 100%,
+    10px 100%,
+    0 calc(100% - 10px),
+    0 10px
+  );
+  transition:
+    transform 220ms var(--ease-stage),
+    box-shadow 260ms var(--ease-stage),
+    border-color 220ms var(--ease-stage),
+    color 220ms var(--ease-stage);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+/* Bulb rail along the top and bottom edge */
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 3px 8px;
+  z-index: -1;
+  pointer-events: none;
+  background-repeat: repeat-x, repeat-x;
+  background-position: left top, left bottom;
+  background-size: 13px 4px, 13px 4px;
+  background-image:
+    radial-gradient(circle at 50% 50%, var(--bulb) 0 34%, transparent 40%),
+    radial-gradient(circle at 50% 50%, var(--bulb) 0 34%, transparent 40%);
+  opacity: 0.42;
+  transition: opacity 240ms var(--ease-stage);
+}
+
+.btn:hover::before,
+.btn:focus-visible::before {
+  opacity: 1;
+  filter: drop-shadow(0 0 3px rgba(255, 215, 106, 0.9));
+}
+
+/* ---- Primary: deep red house ticket ------------------------------------ */
+
+.primary {
+  background: linear-gradient(180deg, var(--red-bright), var(--red) 45%, #7c1015);
+  color: var(--bulb-hot);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 215, 106, 0.28),
+    0 0 24px -6px rgba(163, 22, 28, 0.85);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.primary:hover:not(:disabled),
+.primary:focus-visible {
+  transform: translateY(-2px) scale(1.015);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 215, 106, 0.45),
+    0 0 42px -6px rgba(200, 39, 46, 0.95),
+    0 0 90px -30px rgba(255, 215, 106, 0.8);
+}
+
+.primary:active:not(:disabled) {
+  transform: translateY(0) scale(0.995);
+}
+
+/* ---- Secondary: dark stub with brass outline --------------------------- */
+
+.secondary {
+  background: linear-gradient(180deg, rgba(18, 9, 10, 0.9), rgba(5, 5, 5, 0.95));
+  color: var(--gold);
+  border-color: rgba(214, 168, 74, 0.6);
+}
+
+.secondary:hover:not(:disabled),
+.secondary:focus-visible {
+  color: var(--bulb);
+  border-color: var(--bulb);
+  transform: translateY(-2px);
+  box-shadow: 0 0 34px -12px rgba(255, 215, 106, 0.8);
+}
+
+/* ---- Ghost: text-only usher ------------------------------------------- */
+
+.ghost {
+  border-color: transparent;
+  background: transparent;
+  color: var(--ink-dim);
+  padding-inline: 0.9rem;
+  min-height: 40px;
+}
+
+.ghost::before {
+  display: none;
+}
+
+.ghost:hover:not(:disabled) {
+  color: var(--bulb);
+}
+
+/* ---- Sizes ------------------------------------------------------------- */
+
+.small {
+  padding: 0.62rem 1.15rem;
+  min-height: 40px;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+}
+
+.block {
+  width: 100%;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}

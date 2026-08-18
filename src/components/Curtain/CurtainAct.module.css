@@ -1,0 +1,164 @@
+.section {
+  padding-inline: 0;
+  scroll-margin-top: 96px;
+  padding-block: var(--section-y) 0;
+}
+
+.stage {
+  position: relative;
+  height: clamp(460px, 78vh, 760px);
+  overflow: hidden;
+  border-block: 1px solid rgba(214, 168, 74, 0.22);
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, #180a0b, #030202 72%);
+}
+
+/* ---- Words -------------------------------------------------------------- */
+
+.words {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding-inline: var(--gutter);
+}
+
+.line {
+  position: absolute;
+  transition:
+    opacity 700ms var(--ease-stage),
+    transform 900ms var(--ease-curtain),
+    letter-spacing 900ms var(--ease-curtain);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.visible {
+  opacity: 1;
+}
+
+/* "SHOW OVER?" — small, doubtful, printed on the closed drape */
+.question {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 5vw, 3.4rem);
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  color: rgba(244, 231, 197, 0.82);
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.9);
+  transform: translateY(10px);
+}
+
+.question.visible {
+  transform: none;
+}
+
+/* "NEVER." — the answer, at full volume */
+.answer {
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 15vw, 12rem);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  line-height: 0.92;
+  color: transparent;
+  background: linear-gradient(178deg, #ffd76a 0%, #e0424a 42%, #a3161c 74%, #6e0e12 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: 2px rgba(214, 168, 74, 0.7);
+  paint-order: stroke fill;
+  filter: drop-shadow(0 0 40px rgba(200, 39, 46, 0.6));
+  transform: scale(0.82);
+}
+
+.answer.visible {
+  transform: scale(1);
+}
+
+/* The closing line */
+.coda {
+  position: absolute;
+  bottom: clamp(2.5rem, 8vh, 5rem);
+  left: 0;
+  right: 0;
+  font-family: var(--font-ui);
+  font-size: clamp(0.66rem, 1.5vw, 0.86rem);
+  font-weight: 600;
+  letter-spacing: 0.52em;
+  text-transform: uppercase;
+  color: var(--bulb);
+  text-shadow: 0 0 24px rgba(255, 215, 106, 0.55);
+  transform: translateY(14px);
+}
+
+.coda.visible {
+  transform: none;
+}
+
+/* ---- Bulb frame around the whole proscenium ---------------------------- */
+
+.frame {
+  position: absolute;
+  inset: 18px;
+  z-index: 3;
+  pointer-events: none;
+  border: 2px dotted rgba(255, 215, 106, 0.4);
+  filter: drop-shadow(0 0 6px rgba(255, 215, 106, 0.55));
+  animation: bulbGlow 3.2s ease-in-out infinite;
+}
+
+/* ---- Replay control ----------------------------------------------------- */
+
+.replay {
+  position: absolute;
+  right: clamp(1rem, 3vw, 2.2rem);
+  bottom: clamp(1rem, 3vw, 2.2rem);
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid rgba(214, 168, 74, 0.4);
+  background: rgba(6, 4, 5, 0.75);
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 200ms var(--ease-stage), border-color 200ms var(--ease-stage);
+}
+
+.replay:hover {
+  color: var(--bulb);
+  border-color: var(--bulb);
+}
+
+.head {
+  max-width: var(--max-w);
+  margin: 0 auto clamp(2rem, 4vw, 3rem);
+  padding-inline: var(--gutter);
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+/* ------------------------------------------------------------------
+   Shared stage keyframes.
+   CSS Modules scopes every animation name it sees, so a module cannot
+   reference a keyframe declared in globals.css — the reference would be
+   renamed and resolve to nothing. Shared keyframes are therefore
+   declared in each module that uses them. Keep them in sync with the
+   canonical set documented in src/app/globals.css.
+   ------------------------------------------------------------------ */
+
+@keyframes bulbGlow {
+  0%,
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.72;
+    filter: brightness(0.82);
+  }
+}

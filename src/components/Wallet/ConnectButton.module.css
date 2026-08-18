@@ -1,0 +1,135 @@
+.connected {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.6rem 1rem;
+  min-height: 44px;
+  border: 1px solid rgba(214, 168, 74, 0.45);
+  background: linear-gradient(180deg, rgba(24, 11, 12, 0.9), rgba(6, 4, 5, 0.92));
+  color: var(--cream);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  clip-path: polygon(
+    8px 0,
+    calc(100% - 8px) 0,
+    100% 8px,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    8px 100%,
+    0 calc(100% - 8px),
+    0 8px
+  );
+  transition:
+    border-color 200ms var(--ease-stage),
+    box-shadow 200ms var(--ease-stage);
+}
+
+.connected:hover {
+  border-color: var(--bulb);
+  box-shadow: 0 0 24px -10px rgba(255, 215, 106, 0.9);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--bulb);
+  box-shadow: 0 0 8px rgba(255, 215, 106, 0.9);
+}
+
+/* ---- Dialog ------------------------------------------------------------ */
+
+.dialogHead {
+  padding: 1.5rem 1.6rem 0.6rem;
+}
+
+.dialogTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--bulb);
+}
+
+.dialogSub {
+  margin: 0.4rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: var(--ink-faint);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 1.1rem 1.6rem 1.6rem;
+  min-width: min(360px, 84vw);
+}
+
+.connector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid rgba(214, 168, 74, 0.28);
+  background: rgba(18, 9, 10, 0.7);
+  color: var(--cream);
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    border-color 200ms var(--ease-stage),
+    background 200ms var(--ease-stage),
+    transform 200ms var(--ease-stage);
+}
+
+.connector:hover:not(:disabled) {
+  border-color: var(--bulb);
+  background: rgba(110, 14, 18, 0.42);
+  transform: translateX(3px);
+}
+
+.connector:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.connectorHint {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: var(--gold-deep);
+}
+
+.dialogError {
+  margin: 0 1.6rem 1.4rem;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.1rem 1.6rem 1.6rem;
+  min-width: min(340px, 84vw);
+}
+
+.walletLine {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--cream);
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid rgba(214, 168, 74, 0.16);
+  margin-bottom: 0.4rem;
+}

@@ -1,0 +1,164 @@
+/* The stage manager's board: small, dense, always on. Not a DeFi dashboard. */
+
+.board {
+  border: 1px solid var(--line-strong);
+  background: linear-gradient(180deg, rgba(16, 8, 9, 0.95), rgba(5, 4, 4, 0.97));
+  overflow: hidden;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem clamp(1rem, 2.4vw, 1.6rem);
+  border-bottom: 1px solid rgba(214, 168, 74, 0.24);
+  background: linear-gradient(90deg, rgba(110, 14, 18, 0.32), transparent 70%);
+}
+
+.venue {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+
+.live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--bulb);
+}
+
+.liveDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--bulb);
+  animation: pulseDot 2s ease-out infinite;
+}
+
+.liveDotIdle {
+  background: rgba(244, 231, 197, 0.28);
+  animation: none;
+}
+
+/* ---- Addresses strip ---------------------------------------------------- */
+
+.addresses {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: rgba(214, 168, 74, 0.14);
+  border-bottom: 1px solid rgba(214, 168, 74, 0.2);
+}
+
+.addr {
+  background: rgba(8, 5, 6, 0.9);
+  padding: 0.85rem clamp(1rem, 2.4vw, 1.6rem);
+  min-width: 0;
+}
+
+.addrLabel {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 0.32rem;
+}
+
+.addrValue {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--cream);
+}
+
+.addrValue:hover {
+  color: var(--bulb);
+}
+
+.addrMissing {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  color: rgba(214, 168, 74, 0.6);
+}
+
+/* ---- Numbers ------------------------------------------------------------ */
+
+.figures {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1px;
+  background: rgba(214, 168, 74, 0.14);
+}
+
+.figure {
+  background: rgba(8, 5, 6, 0.9);
+  padding: clamp(1rem, 2.2vw, 1.5rem) clamp(1rem, 2.4vw, 1.6rem);
+  min-width: 0;
+}
+
+.footer {
+  padding: 0.7rem clamp(1rem, 2.4vw, 1.6rem);
+  border-top: 1px solid rgba(214, 168, 74, 0.2);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.4rem;
+  justify-content: space-between;
+}
+
+.notice {
+  margin-top: 1.3rem;
+}
+
+@media (max-width: 1000px) {
+  .figures {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .addresses {
+    grid-template-columns: 1fr;
+  }
+  .figures {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Shared stage keyframes.
+   CSS Modules scopes every animation name it sees, so a module cannot
+   reference a keyframe declared in globals.css — the reference would be
+   renamed and resolve to nothing. Shared keyframes are therefore
+   declared in each module that uses them. Keep them in sync with the
+   canonical set documented in src/app/globals.css.
+   ------------------------------------------------------------------ */
+
+@keyframes pulseDot {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 215, 106, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(255, 215, 106, 0);
+  }
+}

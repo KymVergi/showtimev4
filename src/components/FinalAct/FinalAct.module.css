@@ -1,0 +1,265 @@
+/* Act 06 runs darker than the rest of the house on purpose. */
+
+.section {
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(0, 0, 0, 0.72) 22%,
+    rgba(0, 0, 0, 0.86) 60%,
+    transparent
+  );
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* ---- The darkened stage ------------------------------------------------- */
+
+.stage {
+  position: relative;
+  min-height: clamp(400px, 48vw, 520px);
+  overflow: hidden;
+  border: 1px solid rgba(214, 168, 74, 0.22);
+  background: radial-gradient(ellipse 60% 55% at 50% 62%, #140708, #030202 70%);
+  clip-path: polygon(
+    16px 0,
+    100% 0,
+    100% calc(100% - 16px),
+    calc(100% - 16px) 100%,
+    0 100%,
+    0 16px
+  );
+}
+
+/* The follow-spot that tightens as the act plays */
+.spot {
+  position: absolute;
+  top: -34%;
+  left: 50%;
+  width: 62%;
+  height: 150%;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 215, 106, 0.26),
+    rgba(255, 215, 106, 0.06) 42%,
+    transparent 74%
+  );
+  clip-path: polygon(44% 0%, 56% 0%, 92% 100%, 8% 100%);
+  filter: blur(12px);
+  mix-blend-mode: screen;
+  transition: width 2400ms var(--ease-curtain), opacity 2400ms var(--ease-stage);
+}
+
+.playing .spot {
+  width: 34%;
+  opacity: 1;
+}
+
+/* Boards */
+.boards {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 34%;
+  background:
+    linear-gradient(180deg, transparent, rgba(255, 215, 106, 0.07) 30%, rgba(0, 0, 0, 0.9)),
+    repeating-linear-gradient(90deg, rgba(255, 215, 106, 0.05) 0 1px, transparent 1px 40px);
+  transform: perspective(520px) rotateX(64deg);
+  transform-origin: bottom center;
+}
+
+/* ---- Tokens walking into the light ------------------------------------- */
+
+.token {
+  position: absolute;
+  bottom: 26%;
+  left: var(--x);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--bulb-hot), var(--gold) 45%, #6d4d12);
+  border: 1px solid rgba(255, 215, 106, 0.7);
+  box-shadow: 0 0 14px rgba(255, 215, 106, 0.5);
+  opacity: 0;
+  font-family: var(--font-display);
+}
+
+.playing .token {
+  animation: finalAct var(--dur) var(--ease-curtain) infinite;
+  animation-delay: var(--delay);
+}
+
+@keyframes finalAct {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.95;
+  }
+  /* walk to centre stage */
+  55% {
+    transform: translate(var(--tx), -18px) scale(1);
+    opacity: 1;
+  }
+  /* the light takes them */
+  78% {
+    transform: translate(var(--tx), -46px) scale(0.35);
+    opacity: 0.9;
+    filter: brightness(2.4);
+  }
+  92%,
+  100% {
+    transform: translate(var(--tx), -64px) scale(0);
+    opacity: 0;
+    filter: brightness(3);
+  }
+}
+
+/* Ash motes rising after each token goes */
+.mote {
+  position: absolute;
+  bottom: 30%;
+  left: var(--x);
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(255, 215, 106, 0.8);
+  opacity: 0;
+}
+
+.playing .mote {
+  animation: moteRise var(--dur) linear infinite;
+  animation-delay: var(--delay);
+}
+
+@keyframes moteRise {
+  0%,
+  70% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx), -140px);
+  }
+}
+
+/* ---- The closing drapes ------------------------------------------------- */
+
+.drape {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 54%;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.7) 0px,
+    rgba(74, 8, 12, 0.96) 12px,
+    rgba(140, 18, 24, 0.9) 26px,
+    rgba(58, 6, 10, 0.96) 40px,
+    rgba(0, 0, 0, 0.7) 56px
+  );
+  transition: transform 2600ms var(--ease-curtain);
+}
+
+.left {
+  left: 0;
+  transform: translateX(-86%);
+}
+.right {
+  right: 0;
+  transform: translateX(86%);
+}
+
+.playing .left {
+  transform: translateX(-56%);
+}
+.playing .right {
+  transform: translateX(56%);
+}
+
+/* ---- The line that lands after the dark --------------------------------- */
+
+.continues {
+  position: absolute;
+  inset: auto 0 14% 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: clamp(0.82rem, 1.7vw, 1.15rem);
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  color: var(--bulb);
+  text-shadow: 0 0 26px rgba(255, 215, 106, 0.6);
+  opacity: 0;
+  z-index: 3;
+}
+
+.playing .continues {
+  animation: continuePulse 9s ease-in-out infinite;
+}
+
+@keyframes continuePulse {
+  0%,
+  62% {
+    opacity: 0;
+  }
+  74%,
+  92% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ---- Metrics ------------------------------------------------------------ */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1px;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  background: rgba(214, 168, 74, 0.16);
+  border: 1px solid var(--line);
+}
+
+.cell {
+  background: linear-gradient(180deg, rgba(14, 7, 8, 0.95), rgba(4, 3, 3, 0.97));
+  padding: clamp(1.15rem, 2.2vw, 1.7rem);
+}
+
+.notice {
+  margin-top: 1.4rem;
+}
+
+.caution {
+  margin: 1.2rem 0 0;
+  padding-left: 1rem;
+  border-left: 2px solid rgba(214, 168, 74, 0.4);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  line-height: 1.75;
+  color: var(--ink-faint);
+}
+
+@media (max-width: 940px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,48 @@
+.band {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+  padding: clamp(1.75rem, 4vw, 3rem);
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(ellipse 60% 100% at 100% 50%, rgba(163, 22, 28, 0.16), transparent 70%),
+    linear-gradient(180deg, rgba(14, 7, 8, 0.94), rgba(6, 4, 5, 0.96));
+  clip-path: polygon(
+    18px 0,
+    100% 0,
+    100% calc(100% - 18px),
+    calc(100% - 18px) 100%,
+    0 100%,
+    0 18px
+  );
+}
+
+.q {
+  margin: 0 0 1rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3.2vw, 2.1rem);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bulb);
+  text-shadow: 0 0 28px rgba(255, 215, 106, 0.3);
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.flowHolder {
+  display: grid;
+  place-items: center;
+}
+
+@media (max-width: 900px) {
+  .band {
+    grid-template-columns: 1fr;
+  }
+}
