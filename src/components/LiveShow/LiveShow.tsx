@@ -18,27 +18,43 @@ import {
 import { formatCompact, formatEth, formatInteger, shortAddress, timeAgo } from "@/lib/web3/format";
 import { metric, UNAVAILABLE, type Metric } from "@/types/showtime";
 
-function AddressCell({
+/**
+ * One cell of the board.
+ *
+ * `href` is optional on purpose: a Uniswap V4 pool id is a bytes32, not an
+ * address, so there is no explorer page to send anyone to. Linking it to
+ * /address/0x<64 hex> would produce a dead link that looks alive.
+ */
+function BoardCell({
   label,
-  address,
+  value,
+  href,
+  title,
 }: {
   label: string;
-  address: string | null;
+  value: string | null;
+  href?: string | null;
+  title?: string;
 }) {
   return (
     <div className={styles.addr}>
       <span className={styles.addrLabel}>{label}</span>
-      {address ? (
+      {value === null ? (
+        <span className={styles.addrMissing}>NOT CONFIGURED</span>
+      ) : href ? (
         <a
           className={styles.addrValue}
-          href={explorerAddress(address)}
+          href={href}
           target="_blank"
           rel="noopener noreferrer"
+          title={title ?? value}
         >
-          {shortAddress(address, 6)} ↗
+          {shortAddress(value, 6)} ↗
         </a>
       ) : (
-        <span className={styles.addrMissing}>NOT CONFIGURED</span>
+        <span className={styles.addrValue} title={title ?? value}>
+          {shortAddress(value, 6)}
+        </span>
       )}
     </div>
   );
@@ -88,9 +104,28 @@ export function LiveShow() {
         </div>
 
         <div className={styles.addresses}>
-          <AddressCell label="Pool" address={POOL_ID ?? POOL_MANAGER_ADDRESS} />
-          <AddressCell label="Hook" address={HOOK_ADDRESS} />
-          <AddressCell label="Token" address={TOKEN_ADDRESS} />
+          {/* A V4 pool lives inside the singleton PoolManager and is identified
+              by a bytes32 id, so the id is shown as an id and the manager is
+              shown as the address you can actually go and read. */}
+          {POOL_ID ? (
+            <BoardCell label="Pool ID" value={POOL_ID} title={POOL_ID} />
+          ) : (
+            <BoardCell
+              label="Pool manager"
+              value={POOL_MANAGER_ADDRESS}
+              href={POOL_MANAGER_ADDRESS ? explorerAddress(POOL_MANAGER_ADDRESS) : null}
+            />
+          )}
+          <BoardCell
+            label="Hook"
+            value={HOOK_ADDRESS}
+            href={HOOK_ADDRESS ? explorerAddress(HOOK_ADDRESS) : null}
+          />
+          <BoardCell
+            label="Token"
+            value={TOKEN_ADDRESS}
+            href={TOKEN_ADDRESS ? explorerAddress(TOKEN_ADDRESS) : null}
+          />
         </div>
 
         <div className={styles.figures}>
